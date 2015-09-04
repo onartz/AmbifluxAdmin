@@ -1,0 +1,24 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AmbifluxAdmin", "AmbifluxAdmin.csproj", "{38E36558-10FD-4BDC-97D9-1AD678AB748D}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "SetupAmbifluxClient", "..\SetupAmbifluxClient\SetupAmbifluxClient.vdproj", "{45CCF323-899A-406A-8154-EF99CCF7CD9A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{38E36558-10FD-4BDC-97D9-1AD678AB748D}.Debug|x86.ActiveCfg = Debug|x86
+		{38E36558-10FD-4BDC-97D9-1AD678AB748D}.Debug|x86.Build.0 = Debug|x86
+		{38E36558-10FD-4BDC-97D9-1AD678AB748D}.Release|x86.ActiveCfg = Release|x86
+		{38E36558-10FD-4BDC-97D9-1AD678AB748D}.Release|x86.Build.0 = Release|x86
+		{45CCF323-899A-406A-8154-EF99CCF7CD9A}.Debug|x86.ActiveCfg = Debug
+		{45CCF323-899A-406A-8154-EF99CCF7CD9A}.Release|x86.ActiveCfg = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

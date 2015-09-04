@@ -1,0 +1,20 @@
+﻿<FlowDocument xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+              ColumnWidth="400" FontSize="14" FontFamily="Georgia">
+
+
+    <Paragraph Style="{StaticResource HeaderStyle}">Bienvenue dans Ambiflux</Paragraph>
+
+    <Paragraph Style="{StaticResource mainContentStyle}">
+        Déclencher une nouvelle demande.</Paragraph>
+    
+    <Paragraph Style="{StaticResource mainContentStyle}">
+        Lorsque vous cliquez sur "Nouvelle demande" dans le menu "Mes demandes", Ambiflux détermine automatiquement l'emplacement où la livraison sera effectuée (en fonction du Pc à partir duquel la demande est formulée).
+    </Paragraph>
+    <Paragraph Style="{StaticResource mainContentStyle}">En fonction du type de produit demandé, le robot va se déplacer vers la position de chargement puis faire appel à un personnel qui devra le charger avec le contenu de la demande.
+    </Paragraph>
+    <Paragraph Style="{StaticResource mainContentStyle}">
+        Le robot se déplace ensuite vers la position de livraison et vous prévient de son arrivée.
+        
+    </Paragraph>
+
+</FlowDocument>

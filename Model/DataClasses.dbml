@@ -1,0 +1,224 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="AIPL" Class="DataClassesDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=193.55.104.238;Initial Catalog=AIPL;User ID=Ambiflux" SettingsObjectName="AmbifluxAdmin.Properties.Settings" SettingsPropertyName="AIPLConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Contact" Member="Contact">
+    <Type Name="Contact">
+      <Column Name="ContactID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="FirstName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="LastName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="EmailAddress" Type="System.String" DbType="NVarChar(64)" CanBeNull="true" />
+      <Column Name="Phone" Type="System.String" DbType="NVarChar(25)" CanBeNull="true" />
+      <Association Name="Contact_Customer" Member="Customer" ThisKey="ContactID" OtherKey="ContactID" Type="Customer" />
+      <Association Name="Contact_Employee" Member="Employee" ThisKey="ContactID" OtherKey="ContactID" Type="Employee" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ContainerStatus" Member="ContainerStatus">
+    <Type Name="ContainerStatus">
+      <Column Name="ContainerStatusID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Value" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="ContainerStatus_Container" Member="Container" ThisKey="ContainerStatusID" OtherKey="ContainerStatusID" Type="Container" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Container" Member="Container">
+    <Type Name="Container">
+      <Column Name="ContainerID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Numero" Type="System.String" DbType="VarChar(13) NOT NULL" IsDbGenerated="true" CanBeNull="false" UpdateCheck="Never" />
+      <Column Name="ModifiedDate" AutoSync="Never" Type="System.DateTime" DbType="DateTime NOT NULL" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Type" Type="System.String" DbType="Char(32)" CanBeNull="true" />
+      <Column Name="Length" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Width" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Height" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="LocationID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="OrderID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ContainerStatusID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="ContainerStatus_Container" Member="ContainerStatus" ThisKey="ContainerStatusID" OtherKey="ContainerStatusID" Type="ContainerStatus" IsForeignKey="true" />
+      <Association Name="OrderHeader_Container" Member="OrderHeader" ThisKey="OrderID" OtherKey="OrderID" Type="OrderHeader" IsForeignKey="true" />
+      <Association Name="Location_Container" Member="Location" ThisKey="LocationID" OtherKey="LocationID" Type="Location" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ProductCategory" Member="ProductCategory">
+    <Type Name="ProductCategory">
+      <Column Name="ProductCategoryID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="DefaultLocationID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="ProductCategory_Product" Member="Product" ThisKey="ProductCategoryID" OtherKey="ProductCategoryID" Type="Product" />
+      <Association Name="ProductCategory_DemandeExpress" Member="DemandeExpress" ThisKey="ProductCategoryID" OtherKey="ProductCategoryID" Type="DemandeExpress" />
+      <Association Name="Location_ProductCategory" Member="Location" ThisKey="DefaultLocationID" OtherKey="LocationID" Type="Location" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ProductStatus" Member="ProductStatus">
+    <Type Name="ProductStatus">
+      <Column Name="ProductStatusID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Value" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="ProductStatus_Product" Member="Product" ThisKey="ProductStatusID" OtherKey="ProductStatusID" Type="Product" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Product" Member="Product">
+    <Type Name="Product">
+      <Column Name="ProductID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Description" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="ProductNumber" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Size" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="ProductCategoryID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="DefaultLocationID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="LocationID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ProductStatusID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="ProductStatus_Product" Member="ProductStatus" ThisKey="ProductStatusID" OtherKey="ProductStatusID" Type="ProductStatus" IsForeignKey="true" />
+      <Association Name="ProductCategory_Product" Member="ProductCategory" ThisKey="ProductCategoryID" OtherKey="ProductCategoryID" Type="ProductCategory" IsForeignKey="true" />
+      <Association Name="Location_Product" Member="Location" ThisKey="DefaultLocationID" OtherKey="LocationID" Type="Location" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.OrderStatus" Member="OrderStatus">
+    <Type Name="OrderStatus">
+      <Column Name="OrderStatusID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Value" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="OrderStatus_OrderHeader" Member="OrderHeader" ThisKey="OrderStatusID" OtherKey="OrderStatusID" Type="OrderHeader" />
+    </Type>
+  </Table>
+  <Table Name="dbo.OrderHeader" Member="OrderHeader">
+    <Type Name="OrderHeader" InheritanceCode="O">
+      <Column Name="OrderID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="OrderDate" AutoSync="Never" Type="System.DateTime" DbType="DateTime NOT NULL" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="DueDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="OrderNo" Type="System.String" DbType="NVarChar(26) NOT NULL" IsDbGenerated="true" CanBeNull="false" UpdateCheck="Never" />
+      <Column Name="DateModified" AutoSync="Never" Type="System.DateTime" DbType="DateTime" IsDbGenerated="true" CanBeNull="true" />
+      <Column Name="CustomerID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="DeliveryLocationID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="OrderType" Type="System.Char" DbType="Char(1) NOT NULL" CanBeNull="false" IsDiscriminator="true" />
+      <Column Name="OrderStatusID" Type="System.Int32" DbType="Int" IsDbGenerated="true" CanBeNull="true" />
+      <Association Name="OrderHeader_Container" Member="Container" ThisKey="OrderID" OtherKey="OrderID" Type="Container" />
+      <Association Name="OrderHeader_WorkOrder" Member="WorkOrder" ThisKey="OrderID" OtherKey="OrderID" Type="WorkOrder" />
+      <Association Name="OrderStatus_OrderHeader" Member="OrderStatus" ThisKey="OrderStatusID" OtherKey="OrderStatusID" Type="OrderStatus" IsForeignKey="true" />
+      <Association Name="Customer_OrderHeader" Member="Customer" ThisKey="CustomerID" OtherKey="CustomerID" Type="Customer" IsForeignKey="true" />
+      <Association Name="Location_OrderHeader" Member="Location" ThisKey="DeliveryLocationID" OtherKey="LocationID" Type="Location" IsForeignKey="true" />
+      <Type Name="DemandeExpress" InheritanceCode="D" IsInheritanceDefault="true">
+        <Column Name="ObjetDemandeExpress" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+        <Column Name="ProductCategoryID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+        <Association Name="ProductCategory_DemandeExpress" Member="ProductCategory" ThisKey="ProductCategoryID" OtherKey="ProductCategoryID" Type="ProductCategory" IsForeignKey="true" />
+      </Type>
+      <Type Name="Echange" InheritanceCode="E">
+        <Column Name="Comment" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
+      </Type>
+    </Type>
+  </Table>
+  <Table Name="dbo.Customer" Member="Customer">
+    <Type Name="Customer">
+      <Column Name="CustomerID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="CustomerType" Type="System.Char" DbType="Char(1) NOT NULL" CanBeNull="false" />
+      <Column Name="AccountNo" Type="System.String" DbType="VarChar(11) NOT NULL" IsDbGenerated="true" CanBeNull="false" UpdateCheck="Never" />
+      <Column Name="ContactID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="UserName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Association Name="Customer_OrderHeader" Member="OrderHeader" ThisKey="CustomerID" OtherKey="CustomerID" Type="OrderHeader" />
+      <Association Name="Contact_Customer" Member="Contact" ThisKey="ContactID" OtherKey="ContactID" Type="Contact" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Resource" Member="Resource">
+    <Type Name="Resource" InheritanceCode="R">
+      <Column Name="ResourceID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ResourceType" Type="System.Char" DbType="Char(1) NOT NULL" CanBeNull="false" IsDiscriminator="true" />
+      <Column Name="Name" Type="System.String" DbType="NChar(32)" CanBeNull="true" />
+      <Column Name="DateModified" AutoSync="Never" Type="System.DateTime" DbType="DateTime NOT NULL" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="EquipmentType" Type="System.Char" DbType="Char(1)" CanBeNull="true" />
+      <Column Name="ResourceStatusID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Resource_WorkOrderRouting" Member="WorkOrderRouting" ThisKey="ResourceID" OtherKey="ResourceID" Type="WorkOrderRouting" />
+      <Association Name="ResourceStatus_Resource" Member="ResourceStatus" ThisKey="ResourceStatusID" OtherKey="RessourceStatusID" Type="ResourceStatus" IsForeignKey="true" />
+      <Type Name="Employee" InheritanceCode="P" IsInheritanceDefault="true">
+        <Column Name="CardID" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+        <Column Name="Login" Type="System.String" DbType="NVarChar(32)" CanBeNull="true" />
+        <Column Name="ContactID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+        <Column Name="IsAdministrator" AutoSync="Never" Type="System.Boolean" IsDbGenerated="true" CanBeNull="false" />
+        <Association Name="Contact_Employee" Member="Contact" ThisKey="ContactID" OtherKey="ContactID" Type="Contact" IsForeignKey="true" />
+      </Type>
+      <Type Name="Equipment" InheritanceCode="E">
+        <Column Name="Name" Type="System.String" DbType="NChar(32)" CanBeNull="true" />
+        <Column Name="IPAddress1" Type="System.String" DbType="Char(16)" CanBeNull="true" />
+        <Column Name="IPAddress2" Type="System.String" DbType="Char(16)" CanBeNull="true" />
+        <Type Name="Workstation" InheritanceCode="W">
+          <Column Name="LocationID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+          <Association Name="Location_Workstation" Member="Location" ThisKey="LocationID" OtherKey="LocationID" Type="Location" IsForeignKey="true" />
+        </Type>
+        <Type Name="SRMA" InheritanceCode="S" />
+      </Type>
+    </Type>
+  </Table>
+  <Table Name="dbo.ResourceStatus" Member="ResourceStatus">
+    <Type Name="ResourceStatus">
+      <Column Name="RessourceStatusID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Value" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="ResourceStatus_Resource" Member="Resource" ThisKey="RessourceStatusID" OtherKey="ResourceStatusID" Type="Resource" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Location" Member="Location">
+    <Type Name="Location">
+      <Column Name="LocationID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="Char(13) NOT NULL" CanBeNull="false" />
+      <Column Name="ModifiedDate" AutoSync="Never" Type="System.DateTime" DbType="DateTime NOT NULL" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="LocationTypeID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="LocationStatusID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Location_Container" Member="Container" ThisKey="LocationID" OtherKey="LocationID" Type="Container" />
+      <Association Name="Location_ProductCategory" Member="ProductCategory" ThisKey="LocationID" OtherKey="DefaultLocationID" Type="ProductCategory" />
+      <Association Name="Location_Product" Member="Product" ThisKey="LocationID" OtherKey="DefaultLocationID" Type="Product" />
+      <Association Name="Location_OrderHeader" Member="OrderHeader" ThisKey="LocationID" OtherKey="DeliveryLocationID" Type="OrderHeader" />
+      <Association Name="Location_Workstation" Member="Workstation" ThisKey="LocationID" OtherKey="LocationID" Type="Workstation" />
+      <Association Name="Location_Location" Member="Location2" ThisKey="LocationID" OtherKey="LocationID" Type="Location" Cardinality="One" />
+      <Association Name="Location_WorkOrderRouting" Member="WorkOrderRouting" ThisKey="LocationID" OtherKey="LocationID" Type="WorkOrderRouting" />
+      <Association Name="Location_WorkOrderRouting1" Member="WorkOrderRouting1" ThisKey="LocationID" OtherKey="LocationID" Type="WorkOrderRouting" />
+      <Association Name="Location_Location" Member="Location1" ThisKey="LocationID" OtherKey="LocationID" Type="Location" IsForeignKey="true" />
+      <Association Name="LocationStatus_Location" Member="LocationStatus" ThisKey="LocationStatusID" OtherKey="LocationStatusID" Type="LocationStatus" IsForeignKey="true" />
+      <Association Name="LocationType_Location" Member="LocationType" ThisKey="LocationTypeID" OtherKey="LocationTypeID" Type="LocationType" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.LocationStatus" Member="LocationStatus">
+    <Type Name="LocationStatus">
+      <Column Name="LocationStatusID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Value" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="LocationStatus_Location" Member="Location" ThisKey="LocationStatusID" OtherKey="LocationStatusID" Type="Location" />
+    </Type>
+  </Table>
+  <Table Name="dbo.LocationType" Member="LocationType">
+    <Type Name="LocationType">
+      <Column Name="LocationTypeID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="LocationTypeLabel" Type="System.String" DbType="NChar(64) NOT NULL" CanBeNull="false" />
+      <Association Name="LocationType_Location" Member="Location" ThisKey="LocationTypeID" OtherKey="LocationTypeID" Type="Location" />
+    </Type>
+  </Table>
+  <Table Name="dbo.WorkOrder" Member="WorkOrder">
+    <Type Name="WorkOrder">
+      <Column Name="WorkOrderID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="StartDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="EndDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ModifiedDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="OrderID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="WorkOrderNo" Type="System.String" DbType="VarChar(11) NOT NULL" IsDbGenerated="true" CanBeNull="false" UpdateCheck="Never" />
+      <Column Name="WorkOrderStatusID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Type" Type="System.String" DbType="Char(3)" CanBeNull="true" />
+      <Column Name="DateCreated" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="WorkOrder_WorkOrder" Member="WorkOrder2" ThisKey="WorkOrderID" OtherKey="WorkOrderID" Type="WorkOrder" Cardinality="One" />
+      <Association Name="WorkOrder_WorkOrderRouting" Member="WorkOrderRouting" ThisKey="WorkOrderID" OtherKey="WorkOrderID" Type="WorkOrderRouting" />
+      <Association Name="OrderHeader_WorkOrder" Member="OrderHeader" ThisKey="OrderID" OtherKey="OrderID" Type="OrderHeader" IsForeignKey="true" />
+      <Association Name="WorkOrder_WorkOrder" Member="WorkOrder1" ThisKey="WorkOrderID" OtherKey="WorkOrderID" Type="WorkOrder" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.WorkOrderRouting" Member="WorkOrderRouting">
+    <Type Name="WorkOrderRouting">
+      <Column Name="WorkOrderID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="OperationSequence" Type="System.Int16" DbType="SmallInt NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="LocationID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ResourceID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ScheduledStartDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ScheduledEndDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ActualStartDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ActualEndDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ActualResourceHrs" Type="System.Decimal" DbType="Decimal(9,4)" CanBeNull="true" />
+      <Column Name="PlannedCost" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Column Name="ActualCost" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Column Name="ModifiedDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="WorkOrderRoutingStatusId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Type" Type="System.Char" DbType="Char(1)" CanBeNull="true" />
+      <Column Name="WorkOrderRoutingNo" Type="System.String" DbType="VarChar(14) NOT NULL" IsDbGenerated="true" CanBeNull="false" UpdateCheck="Never" />
+      <Association Name="Location_WorkOrderRouting" Member="Location" ThisKey="LocationID" OtherKey="LocationID" Type="Location" IsForeignKey="true" />
+      <Association Name="Location_WorkOrderRouting1" Member="Location1" ThisKey="LocationID" OtherKey="LocationID" Type="Location" IsForeignKey="true" />
+      <Association Name="Resource_WorkOrderRouting" Member="Resource" ThisKey="ResourceID" OtherKey="ResourceID" Type="Resource" IsForeignKey="true" />
+      <Association Name="WorkOrder_WorkOrderRouting" Member="WorkOrder" ThisKey="WorkOrderID" OtherKey="WorkOrderID" Type="WorkOrder" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>

@@ -1,0 +1,21 @@
+﻿<FlowDocument xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+              ColumnWidth="400" FontSize="14" FontFamily="Georgia">
+   
+
+    <Paragraph Style="{StaticResource HeaderStyle}">Bienvenue dans Ambiflux</Paragraph>
+
+        <Paragraph Style="{StaticResource mainContentStyle}">
+            Ambiflux est un système dont la mission consiste à répondre aux demandes d'approvisionnement des utilisateurs en utilisant de la robotique mobile pour réaliser le transport des articles demandés.
+    </Paragraph>
+    <Paragraph Style="{StaticResource mainContentStyle}">
+            Ambiflux fait appel aux concepts "Ambiants" en déterminant automatiquement le lieu de livraison des commandes, en identifiant les personnels par lecture de badges RFID ou encore en utilisant de la synthèse vocale pour communiquer.
+            
+        </Paragraph>
+    <BlockUIContainer>
+        <Image Source="../Images/robot.jpg" Width="400" />
+    </BlockUIContainer>
+
+
+  
+   
+</FlowDocument>

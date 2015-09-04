@@ -1,0 +1,361 @@
+﻿<!-- ******************************************************************
+     A LINQ Tutorial: WPF Data Binding with LINQ to SQL
+     By: Abby Fichtner, http://www.TheHackerChickBlog.com
+     Article URL: http://www.codeproject.com/KB/linq/linqtutorial3.aspx
+     Licensed under The Code Project Open License (CPOL) 
+     ****************************************************************** -->
+
+<UserControl x:Class="AmbifluxAdmin.View.ResourceDetails"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:System="clr-namespace:System;assembly=mscorlib"
+    xmlns:View="clr-namespace:AmbifluxAdmin.View"
+    xmlns:Model="clr-namespace:AmbifluxAdmin.Model"
+    xmlns:AmbifluxAdmin="clr-namespace:AmbifluxAdmin"
+	x:Name="root">
+
+    <UserControl.Resources>
+        <CollectionViewSource x:Key="LocationList" />
+        <CollectionViewSource x:Key="ContainerStatusList" />
+        <CollectionViewSource x:Key="LocationStatusList" />
+        <CollectionViewSource x:Key="LocationTypeList" />
+        <CollectionViewSource x:Key="ResourceStatusList" />
+        <CollectionViewSource x:Key="ProductStatusList" />
+        <CollectionViewSource x:Key="ProductCategoryList" />
+
+
+        <BitmapImage x:Key="DeleteIcon" UriSource="../Images/delete.ico" />
+        <!--<ControlTemplate x:Key="DeleteEmployeeButton" TargetType="{x:Type Button}">
+            <Button Click="DeleteEmployee" CommandParameter="{Binding}" Height="16" Margin="5" Padding="0">
+                <Image x:Name="deleteImage" Source="{StaticResource DeleteIcon}" />
+            </Button>
+        </ControlTemplate>
+        <ControlTemplate x:Key="DeleteEquipmentButton" TargetType="{x:Type Button}">
+            <Button Click="DeleteEquipment" CommandParameter="{Binding}" Height="16" Margin="5" Padding="0">
+                <Image x:Name="deleteImage" Source="{StaticResource DeleteIcon}" />
+            </Button>
+        </ControlTemplate>-->
+
+        <!-- How to display Employee details -->
+        <DataTemplate DataType="{x:Type Model:Employee}">
+            <StackPanel>
+                <TextBlock FontWeight="Bold" FontSize="14" Foreground="SlateBlue" HorizontalAlignment="Center" Margin="0 0 0 5">Détails</TextBlock>
+                <Border Name="border" BorderBrush="SlateBlue" BorderThickness="1" Padding="10" DockPanel.Dock="Right">
+                    <StackPanel>
+                        <Grid>                          
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="1*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                            <!--<TextBlock FontWeight="Bold" VerticalAlignment="Center" Grid.Row="0" Grid.Column="0">ResourceID :</TextBlock>
+                            <TextBlock Text="{Binding Path=ResourceID}" Margin="5 0" VerticalAlignment="Center" Grid.Row="0" Grid.Column="1"/>-->
+                            <TextBlock FontWeight="Bold" VerticalAlignment="Center" Grid.Row="0" Grid.Column="0">Login :</TextBlock>
+                            <TextBox Text="{Binding Path=Login}" Margin="5 0" VerticalAlignment="Center"  Grid.Row="0" Grid.Column="1"/>
+                            <TextBlock FontWeight="Bold" VerticalAlignment="Center" Grid.Row="1" Grid.Column="0">Nom :</TextBlock>
+                            <TextBox Text="{Binding Path=Contact.LastName}" Margin="5 0" VerticalAlignment="Center" Grid.Row="1" Grid.Column="1"/>
+                            <TextBlock FontWeight="Bold" VerticalAlignment="Center" Grid.Row="2" Grid.Column="0">Prénom :</TextBlock>
+                            <TextBox Text="{Binding Path=Contact.FirstName}" Margin="5 0" VerticalAlignment="Center"  Grid.Row="2" Grid.Column="1"/>
+                            <TextBlock FontWeight="Bold" VerticalAlignment="Center" Grid.Row="3" Grid.Column="0">E-Mail :</TextBlock>
+                            <TextBox Text="{Binding Path=Contact.EmailAddress}" Margin="5 0" VerticalAlignment="Center"  Grid.Row="3" Grid.Column="1"/>
+                            <TextBlock FontWeight="Bold" VerticalAlignment="Center" Grid.Row="4" Grid.Column="0">Tél :</TextBlock>
+                            <TextBox Text="{Binding Path=Contact.Phone}" Margin="5 0" VerticalAlignment="Center"  Grid.Row="4" Grid.Column="1"/>
+                            <TextBlock FontWeight="Bold" VerticalAlignment="Center" Grid.Row="5" Grid.Column="0">N° carte :</TextBlock>
+                            <TextBox Text="{Binding Path=CardID}" Margin="5 0" VerticalAlignment="Center"  Grid.Row="5" Grid.Column="1"/>
+                        </Grid>
+                        <!--<TextBlock FontWeight="Bold" Margin="0 5 0 0">Author(s):</TextBlock>
+                        <ListView ItemsSource="{Binding Path=Authors}" HorizontalContentAlignment="Stretch" BorderThickness="0" DockPanel.Dock="Left" >
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Button Template="{StaticResource DeleteAuthorButton}" ToolTip="Remove author from this book"/>
+                                        <TextBlock Text="{Binding Path=Name}" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>-->
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </DataTemplate>
+
+        <!-- How to display Workstation details -->
+        <DataTemplate DataType="{x:Type Model:Workstation}">
+            <StackPanel>
+                <TextBlock FontWeight="Bold" FontSize="14" Foreground="Maroon" HorizontalAlignment="Center" Margin="0 0 0 5">Détails</TextBlock>
+                <Border Name="border" BorderBrush="Maroon" BorderThickness="1" Padding="10" DockPanel.Dock="Right">
+                    <StackPanel>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="1*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <!--<RowDefinition Height="Auto" />-->
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+
+
+                            </Grid.RowDefinitions>
+                            <!--<TextBlock FontWeight="Bold" VerticalAlignment="Center" Grid.Row="0" Grid.Column="0">ResourceID :</TextBlock>
+                            <TextBlock Text="{Binding Path=ResourceID}" Margin="5 0" VerticalAlignment="Center" Grid.Row="0" Grid.Column="1"/>-->
+                            <TextBlock FontWeight="Bold" VerticalAlignment="Center" Grid.Row="0" Grid.Column="0">Nom :</TextBlock>
+                            <TextBox Text="{Binding Path=Name}" Margin="5 0" VerticalAlignment="Center"  Grid.Row="0" Grid.Column="1"/>
+                            <TextBlock FontWeight="Bold" VerticalAlignment="Center" Grid.Row="1" Grid.Column="0">IP1 :</TextBlock>
+                            <TextBox Text="{Binding Path=IPAddress1}" Margin="5 0" VerticalAlignment="Center" Grid.Row="1" Grid.Column="1"/>
+                            <TextBlock FontWeight="Bold" VerticalAlignment="Center" Grid.Row="2" Grid.Column="0">IP2 :</TextBlock>
+                            <TextBox Text="{Binding Path=IPAddress2}" Margin="5 0" VerticalAlignment="Center" Grid.Row="2" Grid.Column="1"/>
+                            <TextBlock FontWeight="Bold" VerticalAlignment="Center" Grid.Row="3" Grid.Column="0">Status :</TextBlock>
+                         
+                            <ComboBox SelectedItem="{Binding Path=ResourceStatus}" 
+                                      ItemsSource="{Binding Source = {StaticResource ResourceStatusList}}" DisplayMemberPath="Value" 
+                                      IsSynchronizedWithCurrentItem="True" Margin="5 0" VerticalAlignment="Center" Grid.Row="3" Grid.Column="1"/>
+
+
+                            <TextBlock FontWeight="Bold"  VerticalAlignment="Center" Grid.Row="4" Grid.Column="0">Emplacement associé :</TextBlock>
+                            <ComboBox SelectedItem="{Binding Path=Location}" 
+                                      ItemsSource="{Binding Source = {StaticResource LocationList}}" DisplayMemberPath="Name"
+                                      IsSynchronizedWithCurrentItem="True" Margin="5 0" VerticalAlignment="Center" Grid.Row="4" Grid.Column="1"/>
+                        </Grid>
+                      
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </DataTemplate>
+
+
+        <!-- How to display Location details -->
+        <DataTemplate DataType="{x:Type Model:Location}">
+            <StackPanel Name="Details">
+                <TextBlock FontWeight="Bold" FontSize="14" Foreground="ForestGreen" HorizontalAlignment="Center" Margin="0 0 0 5">Détails</TextBlock>
+                <Border Name="border" BorderBrush="ForestGreen" BorderThickness="1" Padding="10" DockPanel.Dock="Right">
+                    <StackPanel>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="1*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+
+                            </Grid.RowDefinitions>
+                            <!--<TextBlock FontWeight="Bold" VerticalAlignment="Center" Grid.Row="0" Grid.Column="0">LocationID :</TextBlock>
+                            <TextBlock Text="{Binding Path=LocationID}" Margin="5 0" VerticalAlignment="Center" Grid.Row="0" Grid.Column="1"/>-->
+                            <TextBlock FontWeight="Bold" VerticalAlignment="Center" Grid.Row="0" Grid.Column="0">Nom :</TextBlock>
+                            <TextBox Text="{Binding Path=Name}" Margin="5 0" VerticalAlignment="Center"  Grid.Row="0" Grid.Column="1"/>
+                            <TextBlock FontWeight="Bold" VerticalAlignment="Center" Grid.Row="1" Grid.Column="0">Type :</TextBlock>
+                            <ComboBox SelectedItem="{Binding Path=LocationType}" 
+                                      ItemsSource="{Binding Source = {StaticResource LocationTypeList}}" DisplayMemberPath="LocationTypeLabel" 
+                                      IsSynchronizedWithCurrentItem="True" Margin="5 0" VerticalAlignment="Center" Grid.Row="1" Grid.Column="1"/>
+                            <TextBlock FontWeight="Bold" VerticalAlignment="Center" Grid.Row="2" Grid.Column="0">Status :</TextBlock>
+                            <ComboBox SelectedItem="{Binding Path=LocationStatus}" 
+                                      ItemsSource="{Binding Source = {StaticResource LocationStatusList}}" DisplayMemberPath="Value" 
+                                      IsSynchronizedWithCurrentItem="True" Margin="5 0" VerticalAlignment="Center" Grid.Row="2" Grid.Column="1"/>
+
+                        </Grid>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </DataTemplate>
+
+        <!-- How to display Containers details -->
+        <DataTemplate DataType="{x:Type Model:Container}">
+            <StackPanel Name="Details">
+                <TextBlock FontWeight="Bold" FontSize="14" Foreground="ForestGreen" HorizontalAlignment="Center" Margin="0 0 0 5">Détails</TextBlock>
+                <Border Name="border" BorderBrush="ForestGreen" BorderThickness="1" Padding="10" DockPanel.Dock="Right">
+                    <StackPanel>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="1*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+
+                            </Grid.RowDefinitions>
+                            <!--<TextBlock FontWeight="Bold" VerticalAlignment="Center" Grid.Row="0" Grid.Column="0">ContainerID :</TextBlock>
+                            <TextBlock Text="{Binding Path=ContainerID}" Margin="5 0" VerticalAlignment="Center" Grid.Row="0" Grid.Column="1"/>-->
+                            <!--<TextBlock FontWeight="Bold" VerticalAlignment="Center" Grid.Row="1" Grid.Column="0">Numéro :</TextBlock>
+                            <TextBlock Text="{Binding Path=Numero}" Margin="5 0" VerticalAlignment="Center"  Grid.Row="1" Grid.Column="1"/>-->
+                            <TextBlock FontWeight="Bold" VerticalAlignment="Center" Grid.Row="0" Grid.Column="0">Longueur :</TextBlock>
+                            <TextBox Text="{Binding Path=Length}" Margin="5 0" VerticalAlignment="Center"  Grid.Row="0" Grid.Column="1"/>
+                            <TextBlock FontWeight="Bold" VerticalAlignment="Center" Grid.Row="1" Grid.Column="0">Largeur :</TextBlock>
+                            <TextBox Text="{Binding Path=Width}" Margin="5 0" VerticalAlignment="Center"  Grid.Row="1" Grid.Column="1"/>
+                            <TextBlock FontWeight="Bold" VerticalAlignment="Center" Grid.Row="2" Grid.Column="0">Hauteur :</TextBlock>
+                            <TextBox Text="{Binding Path=Height}" Margin="5 0" VerticalAlignment="Center"  Grid.Row="2" Grid.Column="1"/>
+                            <TextBlock FontWeight="Bold" VerticalAlignment="Center" Grid.Row="3" Grid.Column="0">Type :</TextBlock>
+                            <TextBox Text="{Binding Path=Type}" Margin="5 0" VerticalAlignment="Center" Grid.Row="3" Grid.Column="1"/>
+                            <TextBlock FontWeight="Bold" VerticalAlignment="Center" Grid.Row="4" Grid.Column="0">Status :</TextBlock>
+                            <!--<TextBox Text="{Binding Path=Status}" Margin="5 0" VerticalAlignment="Center"  Grid.Row="6" Grid.Column="1"/>-->
+                            <ComboBox SelectedItem="{Binding Path=ContainerStatus}" 
+                                      ItemsSource="{Binding Source = {StaticResource ContainerStatusList}}" DisplayMemberPath="Value" 
+                                      IsSynchronizedWithCurrentItem="True" Margin="5 0" VerticalAlignment="Center" Grid.Row="4" Grid.Column="1"/>
+                        </Grid>
+                        <!--<TextBlock FontWeight="Bold" Margin="0 5 0 0">Author(s):</TextBlock>
+                        <ListView ItemsSource="{Binding Path=Authors}" HorizontalContentAlignment="Stretch" BorderThickness="0" DockPanel.Dock="Left" >
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Button Template="{StaticResource DeleteAuthorButton}" ToolTip="Remove author from this book"/>
+                                        <TextBlock Text="{Binding Path=Name}" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>-->
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type Model:ProductCategory}">
+            <StackPanel Name="Details">
+                <TextBlock FontWeight="Bold" FontSize="14" Foreground="ForestGreen" HorizontalAlignment="Center" Margin="0 0 0 5">Détails</TextBlock>
+                <Border Name="border" BorderBrush="ForestGreen" BorderThickness="1" Padding="10" DockPanel.Dock="Right">
+                    <StackPanel>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="1*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                               
+                            </Grid.RowDefinitions>
+                            <!--<TextBlock FontWeight="Bold" VerticalAlignment="Center" Grid.Row="0" Grid.Column="0">ProductCategoryID :</TextBlock>
+                            <TextBlock Text="{Binding Path=ProductCategoryID}" Margin="5 0" VerticalAlignment="Center"  Grid.Row="0" Grid.Column="1"/>-->
+                            <TextBlock FontWeight="Bold" VerticalAlignment="Center" Grid.Row="0" Grid.Column="0">Nom :</TextBlock>
+                            <TextBox Text="{Binding Path=Name}" Margin="5 0" VerticalAlignment="Center"  Grid.Row="0" Grid.Column="1"/>  
+                            <TextBlock FontWeight="Bold" VerticalAlignment="Center" Grid.Row="1" Grid.Column="0">Emplacement par défaut :</TextBlock>
+                               <ComboBox SelectedItem="{Binding Path=Location}" 
+                                      ItemsSource="{Binding Source = {StaticResource LocationList}}" DisplayMemberPath="Name" 
+                                      IsSynchronizedWithCurrentItem="True" Margin="5 0" VerticalAlignment="Center" Grid.Row="1" Grid.Column="1"/>
+                        </Grid>
+                        <!--<TextBlock FontWeight="Bold" Margin="0 5 0 0">Author(s):</TextBlock>
+                        <ListView ItemsSource="{Binding Path=Authors}" HorizontalContentAlignment="Stretch" BorderThickness="0" DockPanel.Dock="Left" >
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Button Template="{StaticResource DeleteAuthorButton}" ToolTip="Remove author from this book"/>
+                                        <TextBlock Text="{Binding Path=Name}" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>-->
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type Model:Product}">
+            <StackPanel Name="Details">
+                <TextBlock FontWeight="Bold" FontSize="14" Foreground="ForestGreen" HorizontalAlignment="Center" Margin="0 0 0 5">Détails</TextBlock>
+                <Border Name="border" BorderBrush="ForestGreen" BorderThickness="1" Padding="10" DockPanel.Dock="Right">
+                    <StackPanel>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="1*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                              
+                            </Grid.RowDefinitions>
+                            <TextBlock FontWeight="Bold" VerticalAlignment="Center" Grid.Row="0" Grid.Column="0">Numéro de produit :</TextBlock>
+                            <TextBox Text="{Binding Path=ProductNumber}" Margin="5 0" VerticalAlignment="Center"  Grid.Row="0" Grid.Column="1"/>
+                            <TextBlock FontWeight="Bold" VerticalAlignment="Center" Grid.Row="1" Grid.Column="0">Description :</TextBlock>
+                            <TextBox Text="{Binding Path=Description}" Margin="5 0" VerticalAlignment="Center"  Grid.Row="1" Grid.Column="1"/>
+                            <TextBlock FontWeight="Bold" VerticalAlignment="Center" Grid.Row="2" Grid.Column="0">Categorie :</TextBlock>
+                            <ComboBox SelectedItem="{Binding Path=ProductCategory}" 
+                                      ItemsSource="{Binding Source = {StaticResource ProductCategoryList}}" DisplayMemberPath="Name" 
+                                      IsSynchronizedWithCurrentItem="True" Margin="5 0" VerticalAlignment="Center" Grid.Row="2" Grid.Column="1"/>
+
+                            <TextBlock FontWeight="Bold" VerticalAlignment="Center" Grid.Row="4" Grid.Column="0">Status :</TextBlock>
+                            <ComboBox SelectedItem="{Binding Path=ProductStatus}" 
+                                      ItemsSource="{Binding Source = {StaticResource ProductStatusList}}" DisplayMemberPath="Value" 
+                                      IsSynchronizedWithCurrentItem="True" Margin="5 0" VerticalAlignment="Center" Grid.Row="3" Grid.Column="1"/>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </DataTemplate>
+
+        <!--<DataTemplate DataType="{x:Type Model:DemandeExpress}">
+            <StackPanel>
+                <TextBlock FontWeight="Bold" FontSize="14" Foreground="SlateBlue" HorizontalAlignment="Center" Margin="0 0 0 5">Détails</TextBlock>
+                <Border Name="border" BorderBrush="SlateBlue" BorderThickness="1" Padding="10" DockPanel.Dock="Right">
+                    <StackPanel>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="1*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+
+                            </Grid.RowDefinitions>
+                            <TextBlock FontWeight="Bold" VerticalAlignment="Center" Grid.Row="0" Grid.Column="0">Categorie :</TextBlock>
+                            <ComboBox SelectedItem="{Binding Path=ProductCategory}" 
+                                      ItemsSource="{Binding Source = {StaticResource ProductCategoryList}}" DisplayMemberPath="Name" 
+                                      IsSynchronizedWithCurrentItem="True" Margin="5 0" VerticalAlignment="Center" Grid.Row="0" Grid.Column="1"/>
+                            <TextBlock FontWeight="Bold" VerticalAlignment="Center" Grid.Row="1" Grid.Column="0">Demande :</TextBlock>
+                            <TextBlock FontWeight="Bold" VerticalAlignment="Center" Grid.Row="1" Grid.Column="1"></TextBlock>
+                            <TextBox Text="{Binding Path=ObjetDemandeExpress}" Margin="5 0" VerticalAlignment="Center" Grid.Row="2" Grid.Column="1"/>
+
+                        </Grid>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </DataTemplate>-->
+
+
+    </UserControl.Resources>
+
+    <Grid Name="EditForm" >
+        <Border Background="#90708090" >
+            <Border BorderBrush="Black" BorderThickness="1" Background="White" 
+					CornerRadius="10,0,10,0" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="20">
+                <StackPanel Margin="10">
+                    <ContentControl Name="Details" Content="{Binding}" Margin="10 10 10 5" />
+                    <!--<View: x:Name="AddBooksControl" Margin="10 0 10 15" />
+                    <View:AddAuthors x:Name="AddAuthorsControl" Margin="10 0 10 15" />-->
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Button x:Name="SaveButton" Click="SaveDetails" Content="Save" Width="50" Margin="2" />
+                        <Button x:Name="CancelButton" Click="CancelUpdate" Content="Cancel" Width="50" Margin="2" />
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+        </Border>
+    </Grid>
+
+</UserControl>

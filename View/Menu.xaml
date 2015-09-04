@@ -1,0 +1,51 @@
+﻿<Page x:Class="AmbifluxAdmin.Menu"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      mc:Ignorable="d" Title="Menu" Background="{x:Null}" Height="391" Width="216">
+
+    <Grid Height="421">
+        <Expander Name="Admin" Background="Beige" 
+          HorizontalAlignment="Left" Header="ADMINISTRATION" 
+          ExpandDirection="Down" IsExpanded="True" Width="180" Margin="6,192,0,148" FontSize="14" IsManipulationEnabled="True" Visibility="Hidden">
+            <ListBox HorizontalAlignment="Left" Name="listBox1" VerticalAlignment="Top" Margin="10" Background="{x:Null}" FontSize="12" BorderThickness="0" Foreground="Gray">
+                <ListBoxItem>
+                    <Hyperlink NavigateUri="ResourceBrowser.xaml" TargetName="frameCenter" Foreground="Gray">Données de base</Hyperlink>
+                </ListBoxItem>
+                <ListBoxItem>
+                    <Hyperlink NavigateUri="ProductBrowser.xaml" TargetName="frameCenter" Foreground="Gray">Articles - Catégories</Hyperlink>
+                </ListBoxItem>  
+            </ListBox>
+        </Expander>
+        
+        <Expander Name="Demande" Background="Beige" 
+          HorizontalAlignment="Left" Header="DEMANDES" 
+          ExpandDirection="Down" IsExpanded="True" Width="180" Margin="5,110,0,235" FontSize="14" IsManipulationEnabled="True">
+            <ListBox HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10" Background="{x:Null}" FontSize="12" BorderThickness="0" Foreground="Gray">
+                <ListBoxItem>
+                    <Hyperlink NavigateUri="OrderHeaderBrowser.xaml" TargetName="frameCenter" Foreground="Gray">Mes demandes</Hyperlink>
+                </ListBoxItem>
+               
+
+            </ListBox>
+        </Expander>
+
+        <Expander Background="Beige" ExpandDirection="Down" Header="GENERALITES" HorizontalAlignment="Left" IsExpanded="True" Margin="6,10,0,317" Name="expander1" Width="178" FontSize="14" Visibility="Visible">
+            <ListBox Background="{x:Null}" HorizontalAlignment="Left" Margin="10" Name="listBox2" VerticalAlignment="Top" BorderThickness="0">
+                <ListBoxItem FontSize="12">
+                    <Hyperlink NavigateUri="Welcome.xaml" TargetName="frameCenter" Foreground="Gray">Accueil</Hyperlink>
+                </ListBoxItem>
+                <ListBoxItem FontSize="12">
+                    <Hyperlink NavigateUri="Procedures.xaml" TargetName="frameCenter" Foreground="Gray">Procédures</Hyperlink>
+                </ListBoxItem>
+            </ListBox>
+        </Expander>
+    </Grid>
+
+
+
+
+
+
+</Page>

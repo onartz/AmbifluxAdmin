@@ -1,0 +1,13 @@
+﻿<Page x:Class="AmbifluxAdmin.Top"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      mc:Ignorable="d" Title="Top" Background="{x:Null}" Height="112" Width="598">
+
+    <Grid Height="120" Width="604">
+        <TextBlock FontSize="32" FontWeight="SemiBold" Margin="259,16,-124,63">Ambiflux</TextBlock>
+        <TextBlock FontSize="12" FontWeight="SemiBold" Margin="258,59,117,22">Système Ambiant de Gestion des Flux</TextBlock>
+        <Image Height="95" HorizontalAlignment="Left" Margin="12,12,0,0" Name="image1" Stretch="Fill" VerticalAlignment="Top" Width="173" Source="/AmbifluxClient;component/Images/AIPL.jpg" />
+    </Grid>
+</Page>

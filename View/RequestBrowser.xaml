@@ -1,0 +1,183 @@
+﻿<Page x:Class="AmbifluxAdmin.View.RequestBrowser"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:View="clr-namespace:AmbifluxAdmin.View"
+      xmlns:AmbifluxAdmin="clr-namespace:AmbifluxAdmin"
+      xmlns:Model="clr-namespace:AmbifluxAdmin.Model"
+      mc:Ignorable="d" 
+      d:DesignHeight="300" d:DesignWidth="300"
+	Title="RequestBrowser">
+    <Page.Resources>
+        <!-- Icons & Buttons -->
+        <Style x:Key="GrayOutButtonStyle" TargetType="{x:Type Button}">
+            <Style.Triggers>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Opacity" Value="0.6" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <BitmapImage x:Key="AddIcon" UriSource="../Images/add.ico" />
+        <ControlTemplate x:Key="AddNewButton" TargetType="{x:Type Button}">
+            <Button Margin="5 0 0 0" >
+                <WrapPanel>
+                    <Image Source="{StaticResource AddIcon}" Height="16" Margin="5 0"/>
+                    <TextBlock Foreground="ForestGreen" Margin="0 0 5 0">Nouveau</TextBlock>
+                </WrapPanel>
+            </Button>
+        </ControlTemplate>
+
+        <BitmapImage x:Key="EditIcon" UriSource="../Images/edit.ico" />
+        <ControlTemplate x:Key="EditButton" TargetType="{x:Type Button}">
+            <Button Style="{StaticResource GrayOutButtonStyle}" Click="EditData" CommandParameter="{Binding}">
+                <Image x:Name="editImage" Source="{StaticResource EditIcon}" />
+            </Button>
+        </ControlTemplate>
+
+        <BitmapImage x:Key="DeleteSoftIcon" UriSource="../Images/delete-black.ico" />
+        <ControlTemplate x:Key="DeleteSoftButton" TargetType="{x:Type Button}">
+            <Button Style="{StaticResource GrayOutButtonStyle}"   Command="View:ResourceBrowser.DeleteSoftDataCommand" CommandParameter="{Binding}">
+                <Image x:Name="deleteSoftImage" Source="{StaticResource DeleteSoftIcon}" />
+            </Button>
+        </ControlTemplate>
+
+        <BitmapImage x:Key="DeleteIcon" UriSource="../Images/delete.ico" />
+        <ControlTemplate x:Key="DeleteButton" TargetType="{x:Type Button}">
+            <Button Style="{StaticResource GrayOutButtonStyle}"  Command="View:ResourceBrowser.DeleteDataCommand" CommandParameter="{Binding}">
+                <Image x:Name="deleteImage" Source="{StaticResource DeleteIcon}" />
+            </Button>
+        </ControlTemplate>
+
+        <BitmapImage x:Key="DisplayIcon" UriSource="../Images/display.ico" />
+
+
+        <Style TargetType="ListViewItem">
+            <Style.Resources>
+                <!-- Prevent list items from appearing like they've been selected -->
+                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent" />
+                <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="Transparent" />
+                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="{x:Static SystemColors.WindowTextColor}" />
+            </Style.Resources>
+        </Style>
+
+        <!-- How to display Employee listings -->
+        <DataTemplate DataType="{x:Type Model:Employee}">
+            <Border Name="border" BorderBrush="SlateBlue" BorderThickness="1" Padding="5" Margin="5" DockPanel.Dock="Left">
+                <StackPanel Orientation="Vertical">
+                    <DockPanel LastChildFill="False">
+                        <TextBlock Text="{Binding Login}" FontWeight="Bold" FontSize="14" DockPanel.Dock="Left"/>
+                        <Button Template="{StaticResource DeleteButton}" DockPanel.Dock="Right" ToolTip="Desactiver"/>
+                        <Button Template="{StaticResource EditButton}" DockPanel.Dock="Right" ToolTip="Editer"/>
+                    </DockPanel>
+                    <TextBlock Text="{Binding Contact.LastName}"/>
+                    <TextBlock Text="{Binding Contact.FirstName}"/>
+                    <DockPanel LastChildFill="False">
+                    </DockPanel>
+                </StackPanel>
+            </Border>
+        </DataTemplate>
+
+        <!-- How to display Worstation listings -->
+        <DataTemplate DataType="{x:Type Model:Workstation}">
+            <Border Name="border" BorderBrush="SlateBlue" BorderThickness="1" Padding="5" Margin="5" DockPanel.Dock="Left">
+                <StackPanel Orientation="Vertical">
+                    <DockPanel LastChildFill="False">
+                        <TextBlock Text="{Binding Name}" FontWeight="Bold" FontSize="14" DockPanel.Dock="Left"/>
+                        <Button Template="{StaticResource DeleteButton}" DockPanel.Dock="Right" ToolTip="Desactiver"/>
+                        <Button Template="{StaticResource EditButton}" DockPanel.Dock="Right" ToolTip="Editer"/>
+                    </DockPanel>
+                    <TextBlock Text="{Binding IPAddress1}"/>
+                    <TextBlock Text="{Binding Location.Name}"/>
+
+                    <DockPanel LastChildFill="False">
+                    </DockPanel>
+                </StackPanel>
+            </Border>
+        </DataTemplate>
+
+        <!-- How to display Container listings -->
+        <DataTemplate DataType="{x:Type Model:Container}">
+            <Border Name="border" BorderBrush="SlateBlue" BorderThickness="1" Padding="5" Margin="5" DockPanel.Dock="Left">
+                <StackPanel Orientation="Vertical">
+                    <DockPanel LastChildFill="False">
+                        <TextBlock Text="{Binding Numero}" FontWeight="Bold" FontSize="14" DockPanel.Dock="Left"/>
+                        <Button Template="{StaticResource DeleteButton}" DockPanel.Dock="Right" ToolTip="Desactiver"/>
+                        <Button Template="{StaticResource EditButton}" DockPanel.Dock="Right" ToolTip="Editer"/>
+                    </DockPanel>
+                    <TextBlock Text="{Binding Type}"/>
+                    <TextBlock Text="{Binding ContainerStatus.Value}"/>
+                    <DockPanel LastChildFill="False">
+                    </DockPanel>
+                </StackPanel>
+            </Border>
+        </DataTemplate>
+
+    
+
+        <!-- How to display Location listings -->
+        <DataTemplate DataType="{x:Type Model:Location}">
+            <Border Name="border" BorderBrush="SlateBlue" BorderThickness="1" Padding="5" Margin="5" DockPanel.Dock="Left">
+                <StackPanel Orientation="Vertical">
+                    <DockPanel LastChildFill="False">
+                        <TextBlock Text="{Binding Name}" FontWeight="Bold" FontSize="14" DockPanel.Dock="Left"/>
+                        <Button Template="{StaticResource DeleteButton}" DockPanel.Dock="Right" ToolTip="Supprimer"/>
+                        <Button Template="{StaticResource DeleteSoftButton}" DockPanel.Dock="Right" ToolTip="Desactiver"/>
+                        <Button Template="{StaticResource EditButton}" DockPanel.Dock="Right" ToolTip="Editer"/>
+                    </DockPanel>
+                    <TextBlock Text="{Binding LocationType}"/>
+                    <TextBlock Text="{Binding LocationStatus.Value}"/>
+                    <DockPanel LastChildFill="False">
+                    </DockPanel>
+                </StackPanel>
+            </Border>
+        </DataTemplate>
+
+
+
+    </Page.Resources>
+
+    <Grid>
+        <Grid x:Name="ModalDialogParent" >
+            <DockPanel>
+                <DockPanel LastChildFill="False" HorizontalAlignment="Stretch" DockPanel.Dock="Top">
+                    <ToolBar DockPanel.Dock="Left" >
+                        <Image Source="{StaticResource DisplayIcon}" Height="16" Margin="5 0 0 0"/>
+                        <Label FontWeight="Bold">Display:</Label>
+                       
+                        <!--<Button Name="EquipmentButton" ToolTip="Equipements" Click="DisplayAllEquipements">Equipements</Button>
+                        <Separator></Separator>-->
+                        <Button Name="DemandeExpressButton" ToolTip="Demande Express" Click="DisplayAllDemandeExpress" >Demandes express</Button>
+                        <Separator></Separator>
+                        <Button Name="EchangeButton" ToolTip="Echange" Click="DisplayAllEchange">Echanges</Button>
+                        <Separator></Separator>
+                        <Button Name="CommandeButton" ToolTip="Commande" Click="DisplayAllCommandes" >Commandes</Button>
+                        <Separator></Separator>
+                        <Button Name="EvacuationButton" ToolTip="Evacuation" Click="DisplayAllEvacuations" >Evacuations</Button>
+                    </ToolBar>
+                    <ToolBar DockPanel.Dock="Right">
+                        <Button Name="AddButton" ToolTip="Add New" Click="AddData"  >
+                            <WrapPanel>
+                                <Image Source="{StaticResource AddIcon}" Height="16" Margin="5 0 5 0 "/>
+                                <TextBlock>Nouveau</TextBlock>
+                            </WrapPanel>
+                        </Button>
+                    </ToolBar>
+                </DockPanel>
+                <StatusBar DockPanel.Dock="Bottom" Height="24">
+                    <StatusBarItem Name="StatusText"></StatusBarItem>
+                </StatusBar>
+
+                <!-- See DataTemplates above for how the listings are displayed, it will vary based on what object type is being displayed -->
+                <ListView ItemsSource="{Binding}" Name="Listing" HorizontalContentAlignment="Stretch" IsSynchronizedWithCurrentItem="True"/>
+            </DockPanel>
+        </Grid>
+
+        <!-- The "popup windows" for editing details -->
+
+        <View:RequestDetails x:Name="EditRequestDetailsDialog" />
+
+    </Grid>
+ 
+</Page>
